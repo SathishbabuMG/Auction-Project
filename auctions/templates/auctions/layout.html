@@ -1,0 +1,122 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Online Auction{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="header">
+        <div class="top"></div>
+        
+        <div class="title">
+        <h1>ONLINE AUCTION</h1>
+        </div>
+        
+   
+        <nav>
+                <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
+                <a class="nav-link" href="{% url 'cat_list' %}">Categories</a>
+                <a class="nav-item">
+            {% if user.is_authenticated and user.is_superuser %}
+                    
+                    <a class="nav-link" href="{% url 'create' %}">Create Listing</a>
+                    <a class="nav-link" href="{% url 'my_products' %}">MyProduct</a>
+                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+            {% elif user.is_authenticated %}
+           
+                
+
+                
+                    <a class="nav-link" href="{% url 'create' %}">Create Listing</a>
+                    <a class="nav-link" href="{% url 'my_products' %}">MyProduct</a>
+               
+                    <a class="nav-link" href="{% url 'watchlistpage' user.username %}">WishList</a>
+               
+                
+                   <a class="nav-link" href="{% url 'winnings' %}">Your Winnings</a>
+                   <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                
+            {% else %}
+                
+                    <a class="nav-link" href="{% url 'login' %}">Log In</a></li>
+                
+                
+                <a class="nav-link" href="{% url 'register' %}">Register</a></li>
+                
+            {% endif %}
+        <a class="animation start-home"></a>
+        <div class="status">
+            {% if user.is_authenticated %}
+                Signed in as <strong>{{ user.username }}</strong>.
+            {% else %}
+                Not signed in.
+            {% endif %}
+        </div>
+                </nav>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <style>
+            
+.title:active
+{
+    color: #ee1010;
+    text-decoration: none;
+}
+.title
+{
+    padding-bottom: 2px;
+}
+    h1{
+        padding-top:60px;
+    }
+body {
+ 
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+    font-variant: tabular-nums;
+    font-feature-settings: "tnum";
+    color:rgb(52, 60, 71, 1);
+    background-color: linen;
+}
+.status{
+    vertical-align: middle;
+    text-align: right;
+    padding-right: 50px;
+    padding-top: 20px;
+}
+
+
+.nav-link
+{
+    display:inline-block;
+    margin: 20px;
+   
+    font-size: large;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif ;
+}
+.header
+{
+    width: 100%;
+    height:250px;
+    background: linear-gradient(#141e30, #243b55);
+    font-family: Arial, Helvetica, sans-serif ;
+    font-variant: tabular-nums;
+    font-feature-settings: "tnum";
+    z-index: 999;
+    color: #ebf3f3;
+    
+    
+}
+
+            
+        </style>
+        {% block body %}
+        
+        {% endblock %}
+    </body>
+</html>

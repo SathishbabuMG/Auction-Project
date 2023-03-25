@@ -1,0 +1,130 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+{% block content %}
+    <h1>My Products</h1>
+    <a class="title">{{ list.title }}</a><br>
+        <a class="cat">{{ list.category }}</a>
+    {% if listings %}
+        
+            {% for list in listings %}
+                
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="message">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                    <div id="activelist">
+                        <div id = "productinfo"></div>
+                    {% if list.image_url %}
+                        <img src="{{ list.image_url }}" class="list_img">
+                    {% else %}
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/1024px-No_image_3x4.svg.png" alt="No image Provided" class="list_img">
+                    {% endif %}
+                    <p class="desc">{{ list.desc }}</p>
+                    <div class="start_bid"><a><a class="c_price">Present Bid: </a> {{ present_bids}} $ </div>
+                    <div class="start_bid"><a><a class="c_price">Listed By: </a> {{ list.user }}</div>
+                    <div class="closebid">
+                        {% if list.user == user.username %}
+                            <form method="get" action="{% url 'win_ner' %}">
+                                <button class="btn btn-outline-primary" type="submit" value="{{ list.id }}" name="listid">Close Bid</button>
+                            </form>
+                        {% endif %}
+                    </div>
+
+                        <div id="commentbox">
+                            <ul>
+                                {% for comment in comments %}
+                                    <li><a class="comment"><a>{{ comment.user }} : {{comment.comment}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>You have not listed any items for auction.</p>
+        <style>
+            .closebid{
+                padding: 1vw;
+            }
+            .desc{
+                font-size: large;
+                font-weight: 800;
+            }
+            #activelist{
+                margin-top: 2vw;
+                grid-gap: 2vw;
+                display:grid;
+                width: 80%;
+                margin-left: 20%;
+                grid-template-rows: repeat(auto,1fr);
+                grid-template-columns: 1fr 0.5fr;
+                font-family: 'Nunito', sans-serif;
+            }
+            p{
+                margin-top: 1vw;
+            }
+            #commentsection{
+                
+                background-color: #F5F5F5;
+                height: 310px;
+            width: 100%;
+            
+            }
+            
+            .bid_amnt{
+                padding: 1vw;
+            }
+            
+            h3{
+                padding-top: 2vw;
+            }
+            
+            #commentbox{
+            text-align:left;
+            padding-top: 1vw;
+            background-color:rgb(255, 255, 255);
+            height: 150px;
+            border-radius: 10px;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: larger;
+            width:auto;
+            margin: 1vw;
+            
+            }
+            
+            img{
+                    width: 100%;
+                  
+                }
+            
+            .title{
+            
+                font-size: 2vw;
+                font-weight: bold;
+            
+            }
+            .c_price{
+                
+                font-weight: bold;
+            
+            }
+            
+            .comment{
+               align-items : left;
+            }
+            
+            .start_bid{
+            
+                padding-bottom: 1vw;
+            
+            }
+            </style>
+    {% endif %}
+
+{% endblock %}
+
+{% endblock %}
